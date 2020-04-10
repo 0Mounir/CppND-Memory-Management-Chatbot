@@ -1,6 +1,9 @@
 #ifndef CHATBOT_H_
 #define CHATBOT_H_
 
+#undef __GXX_ABI_VERSION
+#define __GXX_ABI_VERSION 1002
+
 #include <wx/bitmap.h>
 #include <string>
 
@@ -29,7 +32,11 @@ public:
 
     //// STUDENT CODE
     ////
-
+    /*Add remaining rule of five constructors */
+    ChatBot(const ChatBot &source); // Copy constructor
+    ChatBot& operator=(const ChatBot &source); // Copy assignment operator
+    ChatBot(ChatBot &&source); // Move constructor
+    ChatBot& operator=(ChatBot &&source); // Move assignment operator
     ////
     //// EOF STUDENT CODE
 

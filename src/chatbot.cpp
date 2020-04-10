@@ -44,7 +44,56 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+/*Add remaining rule of five constructors */
+ChatBot::ChatBot(const ChatBot &source) // Copy constructor
+{
+    std::cout<<"Copying content of instance: "<<&source<<" to instance: "<<this<<std::endl;
+    _image = new wxBitmap(*(source._image));
+    _chatLogic=source._chatLogic;
+    _rootNode=source._rootNode;
+}
 
+ChatBot& ChatBot::operator=(const ChatBot &source) // Copy assignment operator
+{
+    std::cout<<"Assigning(Copy) content of instance: "<<&source<<" to instance: "<<this<<std::endl;
+    if(this == &source)
+        return *this;
+    if(NULL != _image)
+        delete _image;
+
+    _image = new wxBitmap(*(source._image));
+    _chatLogic=source._chatLogic;
+    _rootNode=source._rootNode;
+
+    return *this;
+}
+
+ChatBot::ChatBot(ChatBot &&source) // Move constructor
+{
+    std::cout<<"Moving content of instance: "<<&source<<" to instance: "<<this<<std::endl;
+    _image=source._image;
+    _chatLogic=source._chatLogic;
+    _rootNode=source._rootNode;
+    source._image=NULL;
+    source._chatLogic=nullptr;
+    source._rootNode=nullptr;
+}
+
+ChatBot& ChatBot::operator=(ChatBot &&source) // Move assignment operator
+{
+    std::cout<<"Assigning(Move) content of instance: "<<&source<<" to instance: "<<this<<std::endl;
+    if(this==&source)
+        return *this;
+    if(NULL!=_image)
+        delete _image;
+
+    _image=source._image;
+    _chatLogic=source._chatLogic;
+    _rootNode=source._rootNode;
+    source._image=NULL;
+    source._chatLogic=nullptr;
+    source._rootNode=nullptr;
+}
 ////
 //// EOF STUDENT CODE
 
@@ -146,3 +195,4 @@ int ChatBot::ComputeLevenshteinDistance(std::string s1, std::string s2)
 
     return result;
 }
+
