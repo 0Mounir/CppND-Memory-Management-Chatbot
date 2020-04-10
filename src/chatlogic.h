@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 #include "chatgui.h"
 
 // forward declarations
@@ -15,10 +16,10 @@ class ChatLogic
 private:
     //// STUDENT CODE
     ////
-
+    /* Use unique pointers for owned nodes and edges */
     // data handles (owned)
-    std::vector<GraphNode *> _nodes;
-    std::vector<GraphEdge *> _edges;
+    std::vector<std::unique_ptr<GraphNode>> _nodes;
+    std::vector<std::unique_ptr<GraphEdge>> _edges;
 
     ////
     //// EOF STUDENT CODE
@@ -52,3 +53,4 @@ public:
 };
 
 #endif /* CHATLOGIC_H_ */
+
