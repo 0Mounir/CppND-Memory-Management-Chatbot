@@ -2,6 +2,7 @@
 #include <wx/colour.h>
 #include <wx/image.h>
 #include <string>
+#include <memory>
 #include "chatbot.h"
 #include "chatlogic.h"
 #include "chatgui.h"
@@ -116,15 +117,17 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
 
     //// STUDENT CODE
     ////
-
+    /* Change chat logic ownership to be exclusive
+     * for ChatBot dialog panel
+     */
     // create chat logic instance
-    _chatLogic = new ChatLogic(); 
+    _chatLogic=std::make_unique<ChatLogic>();
 
     // pass pointer to chatbot dialog so answers can be displayed in GUI
-    _chatLogic->SetPanelDialogHandle(this);
+    _chatLogic.get()->SetPanelDialogHandle(this);
 
     // load answer graph from file
-    _chatLogic->LoadAnswerGraphFromFile(dataPath + "src/answergraph.txt");
+    _chatLogic.get()->LoadAnswerGraphFromFile(dataPath + "src/answergraph.txt");
 
     ////
     //// EOF STUDENT CODE
@@ -134,8 +137,10 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
 {
     //// STUDENT CODE
     ////
-
-    delete _chatLogic;
+    /*
+     * No need to handle chatLogic memroy management any more.
+     */
+    /* delete _chatLogic; */
 
     ////
     //// EOF STUDENT CODE
@@ -214,3 +219,4 @@ ChatBotPanelDialogItem::ChatBotPanelDialogItem(wxPanel *parent, wxString text, b
     // set background color
     this->SetBackgroundColour((isFromUser == true ? wxT("YELLOW") : wxT("BLUE")));
 }
+
